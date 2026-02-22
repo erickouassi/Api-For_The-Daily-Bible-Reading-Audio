@@ -25,46 +25,25 @@ export function formatDate(date) {
   });
 }
 
-export function findItemByDate(items, date) {
+// ⭐ NEW: return ALL items matching the date
+export function findItemsByDate(items, date) {
   const formattedDate = formatDate(date);
-
-  const match = items.find(item => {
-    const descNode = item.getElementsByTagName("description")[0];
-    const desc = descNode && descNode.textContent ? descNode.textContent : "";
-    return desc.includes(formattedDate);
-  });
-
-  if (!match) return null;
-
-  const enclosure = match.getElementsByTagName("enclosure")[0];
-  const audioUrl = enclosure?.getAttribute("url") || null;
-
-  return {
-    audioMP3Date: formattedDate,
-    audioMP3Link: audioUrl
-  };
-}
-
-export function getMonthItems(items, year, monthIndex) {
-  // monthIndex: 0–11
   const results = [];
 
   items.forEach(item => {
     const descNode = item.getElementsByTagName("description")[0];
-    const desc = descNode && descNode.textContent ? descNode.textContent : "";
+    const desc = descNode?.textContent || "";
 
-    // Try to extract "Month D, YYYY" from description
-    const match = desc.match(/([A-Za-z]+ \d{1,2}, \d{4})/);
-    if (!match) return;
-
-    const dateStr = match[1];
-    const d = new Date(dateStr);
-    if (d.getFullYear() === year && d.getMonth() === monthIndex) {
+    if (desc.includes(formattedDate)) {
       const enclosure = item.getElementsByTagName("enclosure")[0];
       const audioUrl = enclosure?.getAttribute("url") || null;
 
+      // Title may include suffix like " - Supper"
+      const titleNode = item.getElementsByTagName("title")[0];
+      const title = titleNode?.textContent || formattedDate;
+
       results.push({
-        audioMP3Date: dateStr,
+        audioMP3Date: title.replace("Daily Mass Reading Podcast for ", ""),
         audioMP3Link: audioUrl
       });
     }
