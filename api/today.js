@@ -7,9 +7,9 @@ export default async function handler(req, res) {
 
     const results = findItemsByDate(items, today);
 
-    return res.status(200).json(results);
+    res.status(200).json(results);
   } catch (err) {
     console.error("API /today error:", err);
-    return res.status(500).json([]);
+    res.status(500).json({ error: "Server error", details: err.message });
   }
 }
