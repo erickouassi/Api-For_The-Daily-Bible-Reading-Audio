@@ -1,6 +1,8 @@
 {
+  "name": "daily-reading-audio-api",
+  "version": "1.0.0",
+  "type": "module",
   "dependencies": {
-    "node-fetch": "^3.3.2",
-    "@xmldom/xmldom": "^0.8.10"
+    "@xmldom/xmldom": "0.8.10"
   }
 }
