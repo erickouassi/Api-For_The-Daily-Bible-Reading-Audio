@@ -8,6 +8,7 @@ export default function handler(req, res) {
       today: "/api/today",
       yesterday: "/api/yesterday",
       tomorrow: "/api/tomorrow",
+      last30: "/api/last30",
       month: "/api/month"
     },
     author: "Eric Kouassi"
